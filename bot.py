@@ -1,5 +1,7 @@
 import telebot
 
+from packege.parser import parse_fortnite
+
 bot= telebot.TeleBot('1360131281:AAFC1IwsXys5WrgtMfP4PhBxSdmvviGcDVM')
 keyboard = telebot.types.ReplyKeyboardMarkup(True,True)
 keyboard.row("/start")
@@ -8,7 +10,7 @@ keyboard.row("/start")
 def start_message(message):
     user = message.from_user
     if user.username == 'dodickovich' or user.username == 'DeSplit336':
-        bot.send_message(message.chat.id, 'Ты лох по жизни.<br><b> И я не кину тебе биологию</b>')
+        bot.send_message(message.chat.id, 'Ты лох по жизни.<br><b>Не хочу в мафию</b>')
     else:
         IKeybord = telebot.types.InlineKeyboardMarkup()
         FORTNITE = telebot.types.InlineKeyboardButton("Fortnite", callback_data="Fortnite")
@@ -30,13 +32,22 @@ def callback_inline(call):
                 bot.send_message(call.message.chat.id, 'CSGO')
             elif call.data == 'Valorant':
                 bot.send_message(call.message.chat.id, 'Valorant')
+            bot.send_message(call.message.chat.id, 'Send your nickname')
 
-
+            @bot.message_handler(content_types=['text'])
+            def send_text(message):
+                name = message.text
+                print(name)
+                if name:
+                    bot.send_message(message.chat.id, parse_fortnite(name))
             # remove inline buttons
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Game:",
                                   reply_markup=None)
+
     except Exception as e:
         print(repr(e))
+
+
 
 
 
