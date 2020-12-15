@@ -1,6 +1,6 @@
 import telebot
 
-from packege.parser import parse_fortnite
+from packege.parser import parse
 
 bot= telebot.TeleBot('1360131281:AAFC1IwsXys5WrgtMfP4PhBxSdmvviGcDVM')
 keyboard = telebot.types.ReplyKeyboardMarkup(True,True)
@@ -38,8 +38,10 @@ def callback_inline(call):
             def send_text(message):
                 name = message.text
                 print(name)
+                print(parse(name))
+                bot.send_message(message.chat.id, "it can take several minutes")
                 if name:
-                    bot.send_message(message.chat.id, parse_fortnite(name))
+                    bot.send_message(message.chat.id, parse(name))
             # remove inline buttons
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Game:",
                                   reply_markup=None)
