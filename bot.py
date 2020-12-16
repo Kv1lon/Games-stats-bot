@@ -9,8 +9,8 @@ keyboard.row("/start")
 @bot.message_handler(commands=['start'])
 def start_message(message):
     user = message.from_user
-    if user.username == 'dodickovich' or user.username == 'DeSplit336':
-        bot.send_message(message.chat.id, 'Ты лох по жизни.<br><b>Не хочу в мафию</b>')
+    if user.username == 'dodickovich':
+        bot.send_message(message.chat.id, 'Ты лох по жизни.\nНе хочу в мафию\n')
     else:
         IKeybord = telebot.types.InlineKeyboardMarkup()
         FORTNITE = telebot.types.InlineKeyboardButton("Fortnite", callback_data="Fortnite")

@@ -21,6 +21,9 @@ def fortnite(name, bot, message):
     items_solo = soup.find('div', class_='trn-card trn-card--ftr-blue').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
     items_duos = soup.find('div', class_='trn-card trn-card--ftr-green').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
     items_squads = soup.find('div', class_='trn-card trn-card--ftr-purple').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
+    matches_count_solo = soup.find('div', class_='trn-card trn-card--ftr-blue').find('span', class_='trn-card__header-subline').get_text(strip=True).replace("Матчи", "")
+    matches_count_duos = soup.find('div', class_='trn-card trn-card--ftr-green').find('span', class_='trn-card__header-subline').get_text(strip=True).replace("Матчи", "")
+    matches_count_squads = soup.find('div', class_='trn-card trn-card--ftr-purple').find('span', class_='trn-card__header-subline').get_text(strip=True).replace("Матчи", "")
     comps_solo = []
     comps_duos = []
     comps_squads = []
@@ -49,11 +52,11 @@ def fortnite(name, bot, message):
 
             }
         )
-    bot.send_message(message.chat.id, "Solo:")
+    bot.send_message(message.chat.id, f"Solo:\nmatches: {matches_count_solo}")
     bot.send_message(message.chat.id, send_message(comps_solo))
-    bot.send_message(message.chat.id, "Duos:")
+    bot.send_message(message.chat.id, f"Duos:\nmatches: {matches_count_duos}")
     bot.send_message(message.chat.id, send_message(comps_duos))
-    bot.send_message(message.chat.id, "Squads:")
+    bot.send_message(message.chat.id, f"Squads:\nmatches:{matches_count_squads} ")
     bot.send_message(message.chat.id, send_message(comps_squads))
 
 
