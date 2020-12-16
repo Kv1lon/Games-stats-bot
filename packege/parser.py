@@ -3,25 +3,57 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def parse(name):
+def send_message(comps):
+    text= ""
+    for comp in comps:
+        if comp['title'] and comp['value']:
+            text += comp['title'] +" : " + comp['value']+"\n"
+    return text
+
+def fortnite(name, bot, message):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
-
-    browser.get('https://fortnitetracker.com/profile/all/'+name)
-# ... other actions
+    browser.get('https://fortnitetracker.com/profile/all/' + name)
     generated_html = browser.page_source
     browser.quit()
     soup = BeautifulSoup(generated_html, 'html.parser')
-    items = soup.findAll('div',class_='trn-card')
-    comps = []
-    for item in  items:
-        comps.append(
+    items_solo = soup.find('div', class_='trn-card trn-card--ftr-blue').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
+    items_duos = soup.find('div', class_='trn-card trn-card--ftr-green').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
+    items_squads = soup.find('div', class_='trn-card trn-card--ftr-purple').find('div', class_='trn-defstats').find_all('div', class_='trn-defstat')
+    comps_solo = []
+    comps_duos = []
+    comps_squads = []
+
+    for item in items_solo:
+        comps_solo.append(
+                {
+                    'title': item.find('div', class_='trn-defstat__name').get_text(strip=True),
+                    'value': item.find('div', class_='trn-defstat__values').get_text(strip=True),
+
+                }
+            )
+    for item in items_duos:
+        comps_duos.append(
             {
-                'title': item.find('h2', class_ = 'trn-card__header-title'),
-                'wins': item.find('div', class_='trn-defstat__value'),
+                'title': item.find('div', class_='trn-defstat__name').get_text(strip=True),
+                'value': item.find('div', class_='trn-defstat__values').get_text(strip=True),
 
             }
         )
-        for comp in comps:
-            return "fdf"
+    for item in items_squads:
+        comps_squads.append(
+            {
+                'title': item.find('div', class_='trn-defstat__name').get_text(strip=True),
+                'value': item.find('div', class_='trn-defstat__values').get_text(strip=True),
+
+            }
+        )
+    bot.send_message(message.chat.id, "Solo:")
+    bot.send_message(message.chat.id, send_message(comps_solo))
+    bot.send_message(message.chat.id, "Duos:")
+    bot.send_message(message.chat.id, send_message(comps_duos))
+    bot.send_message(message.chat.id, "Squads:")
+    bot.send_message(message.chat.id, send_message(comps_squads))
+
+
