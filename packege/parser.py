@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def send_message(comps):
+def send_message(comps,matches):
     text= ""
+    text+="Matches: "+matches+"\n"
     for comp in comps:
         if comp['title'] and comp['value']:
             text += comp['title'] +" : " + comp['value']+"\n"
@@ -52,11 +53,11 @@ def fortnite(name, bot, message):
 
             }
         )
-    bot.send_message(message.chat.id, f"Solo:\nmatches: {matches_count_solo}")
-    bot.send_message(message.chat.id, send_message(comps_solo))
-    bot.send_message(message.chat.id, f"Duos:\nmatches: {matches_count_duos}")
-    bot.send_message(message.chat.id, send_message(comps_duos))
-    bot.send_message(message.chat.id, f"Squads:\nmatches:{matches_count_squads} ")
-    bot.send_message(message.chat.id, send_message(comps_squads))
+    bot.send_message(message.chat.id, "Solo:")
+    bot.send_message(message.chat.id, send_message(comps_solo,matches_count_solo))
+    bot.send_message(message.chat.id, "Duos:")
+    bot.send_message(message.chat.id, send_message(comps_duos,matches_count_duos))
+    bot.send_message(message.chat.id, "Squads:")
+    bot.send_message(message.chat.id, send_message(comps_squads,matches_count_squads))
 
 
