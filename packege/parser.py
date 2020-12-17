@@ -3,6 +3,17 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
+def get_stats(name,bot, message):
+    if ("CSGO: " in name) or ("CSGO:" in name) or ("csgo: " in name) or ("csgo:" in name) or ("CSGO " in name) or ("csgo" in name):
+        name = name.replace("CSGO: ", "").replace("CSGO:", "").replace("csgo: ", "").replace("CSGO ", "").replace(
+            "csgo ", "")
+        CSGO(name, bot, message)
+    if ("Fortnite: " in name)  or ("fortnite: " in name) or ("Fortnite:" in name) or ("fortnite:" in name) or ("fortnite " in name) or ("Fortnite " in name):
+        name = name.replace("Fortnite: ","").replace("fortnite: ","").replace("Fortnite:","").replace("fortnite:","").replace("fortnite ","").replace("Fortnite ","")
+        fortnite(name, bot, message)
+
+
+
 def send_message(comps, text):
     for comp in comps:
         if comp['title'] and comp['value']:
@@ -94,7 +105,7 @@ def CSGO(name, bot, message):
     matches_count = soup.find('div', class_='segment-stats removeMeLater card bordered responsive').find('span',
                                                                                                          class_='matches').get_text(
         strip=True)
-    playtime = soup.find('div', class_='segment-stats removeMeLater card bordered responsive').find('span',class_='matches').get_text(
+    playtime = soup.find('div', class_='segment-stats removeMeLater card bordered responsive').find('span',class_='playtime').get_text(
         strip=True)
     nickname = soup.find('span', class_='trn-ign__username').get_text(strip=True).replace(" csgostats.gg","")
 
