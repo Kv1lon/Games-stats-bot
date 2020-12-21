@@ -16,7 +16,7 @@ def start_message(message):
         FORTNITE = telebot.types.InlineKeyboardButton("Fortnite", callback_data="Fortnite")
         CSGO = telebot.types.InlineKeyboardButton("CSGO", callback_data="CSGO")
         IKeybord.add(FORTNITE, CSGO)
-        bot.send_message(message.chat.id, 'Привет '+user.first_name+' , выбери игру', reply_markup=IKeybord)
+        bot.send_message(message.chat.id, 'Привет '+user.first_name+' , выбери игру и потом  напиши свой никнейм в формате "csgo: {steam id}, fortnite: {nickname}" \n Avaliable games:', reply_markup=IKeybord)
         send_stats()
 
 
